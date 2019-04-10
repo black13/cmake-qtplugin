@@ -20,7 +20,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(project_sources filtersplugin.cpp)
 
-set(project_headers filterspluing.h)
+set(project_headers filtersplugin.h)
+
 
 # wrap the ui file to a c++ header
 qt5_wrap_ui(ui_wrap ${project_ui})
@@ -30,5 +31,11 @@ qt5_wrap_cpp(moc_sources ${project_headers})
 # file from the qt5_wrap_ui call below.
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-#Generate the shared library from the library sources
-add_library(hello_library SHARED filtersplugin.cpp)
+
+add_library(hello_library SHARED ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
+
+qt5_use_modules(hello_library Quick Core)
+
+target_link_libraries(hello_library ${QT_LIBRARIES} ${catkin_LIBRARIES})
+
+target_include_directories(hello_library PUBLIC include)

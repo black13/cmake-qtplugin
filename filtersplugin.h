@@ -3,23 +3,20 @@
 #define EXTRAFILTERSPLUGIN_H
 
 //! [0]
-#include "interface.h"
+#include "pluginbase.h"
 
 #include <QObject>
 #include <QtPlugin>
 #include <QStringList>
 #include <QImage>
 
-class ExtraFiltersPlugin : public QObject, public FilterInterface
+class Plugin : public QObject, public PluginBase
 {
     Q_OBJECT
-    Q_INTERFACES(FilterInterface)
+    Q_INTERFACES(PluginBase)
 
 public:
-    QStringList filters() const override;
-    QImage filterImage(const QString &filter, const QImage &image,
-                       QWidget *parent) override;
+    QStringList initialize() const override;    
 };
-//! [0]
 
 #endif
