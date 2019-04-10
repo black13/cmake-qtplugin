@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+695f80a93cdede2edd6a77beb57518bc CMakeFiles/hello_library_autogen
+627896bc122635fa8bc418ab34cee4aa CMakeFiles/test_plugin_autogen

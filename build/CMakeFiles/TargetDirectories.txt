@@ -1,0 +1,6 @@
+/Users/jjosburn/Documents/programming/cmake-qtplugin/build/CMakeFiles/rebuild_cache.dir
+/Users/jjosburn/Documents/programming/cmake-qtplugin/build/CMakeFiles/edit_cache.dir
+/Users/jjosburn/Documents/programming/cmake-qtplugin/build/CMakeFiles/test_plugin.dir
+/Users/jjosburn/Documents/programming/cmake-qtplugin/build/CMakeFiles/hello_library.dir
+/Users/jjosburn/Documents/programming/cmake-qtplugin/build/CMakeFiles/test_plugin_autogen.dir
+/Users/jjosburn/Documents/programming/cmake-qtplugin/build/CMakeFiles/hello_library_autogen.dir
