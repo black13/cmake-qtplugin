@@ -1,50 +1,30 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.8.2)
 
-project(plugin-project)
+project(qt_helpers)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+# Find includes in the build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# Turn on automatic invocation of the MOC, UIC & RCC
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-# Define project name
+# There may be a way to tell up front if Qt5 is going to be found, but I haven't found
+# a foolproof way to do it yet, so settle for the default error message for now.
+#if(NOT CMAKE_PREFIX_PATH AND NOT Qt5Widgets_DIR)
+#    message(WARNING "CMAKE_PREFIX_PATH is not defined, so find_package may not work. Set the CMAKE_PREFIX_PATH "
+#            "environment variable to the install prefix of Qt 5, either on the command line as "
+#            "-DCMAKE_PREFIX_PATH=\"path/to/Qt5/lib/cmake\" or with set(CMAKE_PREFIX_PATH path/to/Qt5/lib/cmake)")
+#endif(NOT CMAKE_PREFIX_PATH AND NOT Qt5Widgets_DIR)
 
-# Find OpenCV, you may need to set OpenCV_DIR variable
-# to the absolute path to the directory containing OpenCVConfig.cmake file
-# via the command line or GUI
+# Add a compiler flag
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-find_package(Qt5 COMPONENTS REQUIRED Quick Qml Core Gui Widgets Test)
+find_package(Qt5 COMPONENTS Qml Core Widgets REQUIRED)
 
-# Declare the executable target built from your sources
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Sql PrintSupport)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+add_library(qt_helpers SHARED ${PROJECT_SOURCE_DIR}/filtersplugin.cpp)
 
-set(project_sources filtersplugin.cpp main.cpp)
-
-set(project_headers filtersplugin.h)
-
-
-# wrap the ui file to a c++ header
-qt5_wrap_ui(ui_wrap ${project_ui})
-qt5_wrap_cpp(moc_sources ${project_headers})
-    
-# need this to include the auto generated ui_mainwindow.h 
-# file from the qt5_wrap_ui call below.
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-
-add_library(hello_library SHARED filtersplugin.cpp ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
-
-qt5_use_modules(hello_library Quick Core Qml)
-
-target_link_libraries(hello_library ${QT_LIBRARIES})
-
-target_include_directories(hello_library PUBLIC include)
-
-#build the tester 
-
-add_executable(test_plugin main.cpp)
-
-
-target_link_libraries(test_plugin Qt5::Test Qt5::Qml)
+target_link_libraries(qt_helpers Qt5::Widgets Qt5::Qml)

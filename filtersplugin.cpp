@@ -1,25 +1,10 @@
-
-#include <QtWidget>
-
-#include <math.h>
-#include <stdlib.h>
+#include <QWidget>
 #include <QJSEngine>
 #include <QDebug>
-#define TEST
-#include "filtersplugin.h"
 #include <QtCore/qplugin.h>
 
-void Plugin::initialize() const
+
+extern "C" Q_DECL_EXPORT void gammaray_startup_hook()
 {
-    //build all the 
-}
-
-extern "C" {
-
-extern Q_DECL_EXPORT bool initialize_plugin(QJSEngine * )
-{
-    debug.nospace() << '(debug)';
-    return false;
-}
-
+   
 }
