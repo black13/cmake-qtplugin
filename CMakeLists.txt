@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8.2)
 
-project(qt_helpers)
+project(test_plugin)
 
 # Find includes in the build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -10,21 +10,18 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-# There may be a way to tell up front if Qt5 is going to be found, but I haven't found
-# a foolproof way to do it yet, so settle for the default error message for now.
-#if(NOT CMAKE_PREFIX_PATH AND NOT Qt5Widgets_DIR)
-#    message(WARNING "CMAKE_PREFIX_PATH is not defined, so find_package may not work. Set the CMAKE_PREFIX_PATH "
-#            "environment variable to the install prefix of Qt 5, either on the command line as "
-#            "-DCMAKE_PREFIX_PATH=\"path/to/Qt5/lib/cmake\" or with set(CMAKE_PREFIX_PATH path/to/Qt5/lib/cmake)")
-#endif(NOT CMAKE_PREFIX_PATH AND NOT Qt5Widgets_DIR)
 
-# Add a compiler flag
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 find_package(Qt5 COMPONENTS Qml Core Widgets REQUIRED)
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Sql PrintSupport)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Sql PrintSupport Test)
 
-add_library(qt_helpers SHARED ${PROJECT_SOURCE_DIR}/filtersplugin.cpp)
+add_library(plugin SHARED ${PROJECT_SOURCE_DIR}/filtersplugin.cpp)
 
-target_link_libraries(qt_helpers Qt5::Widgets Qt5::Qml)
+target_link_libraries(plugin Qt5::Widgets Qt5::Qml)
+
+
+add_executable(test_plugin main.cpp)
+
+target_link_libraries(test_plugin Qt5::Widgets Qt5::Qml Qt5::Test) 

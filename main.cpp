@@ -1,7 +1,7 @@
 #include <QTest>
 #include <QLibrary>
 #include <QJSEngine>
-#include "pluginbase.h"
+//#include "pluginbase.h"
 
 class tst_plugin : public QObject {
     Q_OBJECT
@@ -10,11 +10,12 @@ private slots:
     void t1(); 
 };
 
+typedef void (*plugin_initialize_function) (void);
+
 void tst_plugin::t1()
 {
-
-    if (QLibrary::isLibrary("libhello_library.dylib")) { // C:/MediaInfo.dll
-    QLibrary lib("libhello_library.dylib");
+    if (QLibrary::isLibrary("libplugin.dylib")) { // C:/MediaInfo.dll
+    QLibrary lib("libplugin.dylib");
     lib.load();
     if (!lib.isLoaded()) {
     qDebug() << lib.errorString();
@@ -26,14 +27,15 @@ void tst_plugin::t1()
     // Resolves symbol to
     // void the_function_name()
     
-    QJSEngine engine; 
-    plugin_initialize_function myFunction = (plugin_initialize_function) lib.resolve("initialize_plugin");
+    QJSEngine engine;
+
+    plugin_initialize_function myFunction = (plugin_initialize_function) lib.resolve("gammaray_startup_hook");
     if(!myFunction)
     {
         qDebug() << "function not loaded";   
     }
     if (myFunction)
-        myFunction(&engine);
+        myFunction();
     }
 }
     /*
