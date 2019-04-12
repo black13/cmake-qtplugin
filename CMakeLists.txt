@@ -20,7 +20,7 @@ find_package(Qt5 COMPONENTS REQUIRED Quick Qml Core Gui Widgets Test)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(project_sources filtersplugin.cpp)
+set(project_sources filtersplugin.cpp main.cpp)
 
 set(project_headers filtersplugin.h)
 
@@ -34,11 +34,11 @@ qt5_wrap_cpp(moc_sources ${project_headers})
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-add_library(hello_library SHARED ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
+add_library(hello_library SHARED filtersplugin.cpp ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
 
-qt5_use_modules(hello_library Quick Core)
+qt5_use_modules(hello_library Quick Core Qml)
 
-target_link_libraries(hello_library ${QT_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(hello_library ${QT_LIBRARIES})
 
 target_include_directories(hello_library PUBLIC include)
 
@@ -47,4 +47,4 @@ target_include_directories(hello_library PUBLIC include)
 add_executable(test_plugin main.cpp)
 
 
-target_link_libraries(test_plugin Qt5::Test)
+target_link_libraries(test_plugin Qt5::Test Qt5::Qml)
